@@ -1,6 +1,10 @@
 package com.cra;
 
 public class FizzBuzz {
+    public void fizzbuzz() {
+
+    }
+
     public String convert(int number) {
         if (number <= 0) {
             throw new RuntimeException("Invalid Data. number:" + number);
