@@ -1,6 +1,12 @@
 package com.cra;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -11,6 +17,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@TestMethodOrder(OrderAnnotation.class)
 public class FizzBuzzTest {
     private static final List<String> FIZZBUZZES_1_100 = Arrays.asList(
             "1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz",
@@ -25,6 +32,8 @@ public class FizzBuzzTest {
             "91", "92", "Fizz", "94", "Buzz", "Fizz", "97", "98", "Fizz", "Buzz");
 
     @Test
+    @Order(1)
+    @DisplayName("1. FizzBuzz 테스트 with 출력값 비교")
     void fizzbuzzPrintTest() throws IOException {
         FizzBuzz fizzBuzz = new FizzBuzz();
         ByteArrayOutputStream bo = new ByteArrayOutputStream();
@@ -36,6 +45,8 @@ public class FizzBuzzTest {
     }
 
     @Test
+    @Order(2)
+    @DisplayName("2. FizzBuzz 테스트 with List<String> 비교")
     void fizzbuzzListTest() {
         FizzBuzz fizzBuzz = new FizzBuzz();
         List<String> actual = fizzBuzz.getList();
@@ -50,41 +61,36 @@ public class FizzBuzzTest {
         return new String(bo.toByteArray());
     }
 
-    @Test
-    void fizzbuzzForMultiplesOfThreeAndFiveTest() {
+    @ParameterizedTest
+    @Order(3)
+    @DisplayName("3. 임의의 값에 대한 FizzBuzz 변환 테스트")
+    @CsvSource({
+            "1,1",
+            "2,2",
+            "3,Fizz",
+            "4,4",
+            "5,Buzz",
+            "6,Fizz",
+            "7,7",
+            "8,8",
+            "9,Fizz",
+            "10,Buzz",
+            "11,11",
+            "13,13",
+            "15,FizzBuzz",
+            "17,17",
+            "20,Buzz",
+            "30,FizzBuzz",
+            "45,FizzBuzz"
+    })
+    void fizzbuzzTest(int number, String expected) {
         Converter converter = new Converter();
-        assertEquals("FizzBuzz", converter.convert(15));
-        assertEquals("FizzBuzz", converter.convert(30));
-        assertEquals("FizzBuzz", converter.convert(45));
+        assertEquals(expected, converter.convert(number));
     }
 
     @Test
-    void fizzForMultiplesOfThreeTest() {
-        Converter converter = new Converter();
-        assertEquals("Fizz", converter.convert(3));
-        assertEquals("Fizz", converter.convert(6));
-        assertEquals("Fizz", converter.convert(9));
-    }
-
-    @Test
-    void buzzForMultiplesFiveTest() {
-        Converter converter = new Converter();
-        assertEquals("Buzz", converter.convert(5));
-        assertEquals("Buzz", converter.convert(10));
-        assertEquals("Buzz", converter.convert(20));
-    }
-
-    @Test
-    void printTheNumberForOthersTest() {
-        Converter converter = new Converter();
-        assertEquals("1", converter.convert(1));
-        assertEquals("2", converter.convert(2));
-        assertEquals("7", converter.convert(7));
-        assertEquals("11", converter.convert(11));
-        assertEquals("13", converter.convert(13));
-    }
-
-    @Test
+    @Order(4)
+    @DisplayName("4. 0이하의 입력값에 대해서는 Exception")
     void throwsInvalidDataExceptionTest() {
         Converter converter = new Converter();
         assertThrows(RuntimeException.class,
