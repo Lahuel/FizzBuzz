@@ -2,6 +2,9 @@ package com.cra;
 
 public class FizzBuzz {
     public String convert(int number) {
+        if (number <= 0) {
+            throw new RuntimeException("Invalid Data. number:" + number);
+        }
         if (number == 3 || number == 6) {
             return "Fizz";
         }
