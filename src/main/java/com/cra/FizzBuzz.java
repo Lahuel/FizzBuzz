@@ -13,26 +13,11 @@ public class FizzBuzz {
     }
 
     List<String> getList() {
+        Converter converter = new Converter();
         List<String> result = new ArrayList<>();
         for (int i = START_INCLUSIVE; i < END_EXCLUSIVE; i++) {
-            result.add(convert(i));
+            result.add(converter.convert(i));
         }
         return result;
-    }
-
-    String convert(int number) {
-        if (number <= 0) {
-            throw new RuntimeException("Invalid Data. number:" + number);
-        }
-        if (number % DIVISOR_THREE == 0 && number % DIVISOR_FIVE == 0) {
-            return FIZZBUZZ;
-        }
-        if (number % DIVISOR_THREE == 0) {
-            return FIZZ;
-        }
-        if (number % DIVISOR_FIVE == 0) {
-            return BUZZ;
-        }
-        return String.valueOf(number);
     }
 }
