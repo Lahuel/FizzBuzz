@@ -7,15 +7,22 @@ public class Converter {
         if (number <= 0) {
             throw new RuntimeException("Invalid Data. number:" + number);
         }
-        if (number % DIVISOR_THREE == 0 && number % DIVISOR_FIVE == 0) {
+        if (isMultiple(number, DIVISOR_THREE) && isMultiple(number, DIVISOR_FIVE)) {
             return FIZZBUZZ;
         }
-        if (number % DIVISOR_THREE == 0) {
+        if (isMultiple(number, DIVISOR_THREE)) {
             return FIZZ;
         }
-        if (number % DIVISOR_FIVE == 0) {
+        if (isMultiple(number, DIVISOR_FIVE)) {
             return BUZZ;
         }
         return String.valueOf(number);
+    }
+
+    private boolean isMultiple(int number, int divisor) {
+        if (divisor == 0) {
+            throw new RuntimeException("Divided by Zero. divisor:" + divisor);
+        }
+        return number % divisor == 0;
     }
 }
