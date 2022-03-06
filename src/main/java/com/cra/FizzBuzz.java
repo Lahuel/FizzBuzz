@@ -2,7 +2,9 @@ package com.cra;
 
 public class FizzBuzz {
     public void fizzbuzz() {
-
+        for (int i = 1; i < 101; i++) {
+            System.out.println(convert(i));
+        }
     }
 
     public String convert(int number) {
