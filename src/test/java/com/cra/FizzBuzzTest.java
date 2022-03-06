@@ -3,6 +3,7 @@ package com.cra;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class FizzBuzzTest {
     @Test
@@ -37,5 +38,25 @@ public class FizzBuzzTest {
         assertEquals("7", fizzBuzz.convert(7));
         assertEquals("11", fizzBuzz.convert(11));
         assertEquals("13", fizzBuzz.convert(13));
+    }
+
+    @Test
+    void throwsInvalidDataExceptionTest() {
+        FizzBuzz fizzBuzz = new FizzBuzz();
+        assertThrows(RuntimeException.class,
+                ()->fizzBuzz.convert(0)
+        );
+        assertThrows(RuntimeException.class,
+                ()->fizzBuzz.convert(-1)
+        );
+        assertThrows(RuntimeException.class,
+                ()->fizzBuzz.convert(-3)
+        );
+        assertThrows(RuntimeException.class,
+                ()->fizzBuzz.convert(-5)
+        );
+        assertThrows(RuntimeException.class,
+                ()->fizzBuzz.convert(-15)
+        );
     }
 }
