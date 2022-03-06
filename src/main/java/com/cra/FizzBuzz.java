@@ -1,9 +1,10 @@
 package com.cra;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static com.cra.Constants.*;
+import static java.util.stream.Collectors.toList;
 
 public class FizzBuzz {
     public void fizzbuzz() {
@@ -11,11 +12,11 @@ public class FizzBuzz {
     }
 
     List<String> getList() {
-        Converter converter = new Converter();
-        List<String> result = new ArrayList<>();
-        for (int i = START_INCLUSIVE; i < END_EXCLUSIVE; i++) {
-            result.add(converter.convert(i));
-        }
-        return result;
+        return IntStream.range(START_INCLUSIVE, END_EXCLUSIVE)
+                .boxed()
+                .collect(toList())
+                .stream()
+                .map(number -> new Converter().convert(number))
+                .collect(toList());
     }
 }
