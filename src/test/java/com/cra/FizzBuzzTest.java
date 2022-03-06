@@ -14,12 +14,23 @@ import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.cra.Constants.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestMethodOrder(OrderAnnotation.class)
 public class FizzBuzzTest {
-    private FizzBuzz fizzBuzz = new FizzBuzz();
+    private Converter fizzbuzzConverter = new Converter(Arrays.asList(
+            new Divisor(DIVISOR_THREE, SOUND_FIZZ),
+            new Divisor(DIVISOR_FIVE, SOUND_BUZZ)));
+
+    private Converter fizzbuzzbazzConverter = new Converter(Arrays.asList(
+            new Divisor(DIVISOR_THREE, SOUND_FIZZ),
+            new Divisor(DIVISOR_FIVE, SOUND_BUZZ),
+            new Divisor(DIVISOR_SEVEN, SOUND_BAZZ)));
+
+    private FizzBuzz fizzBuzz = new FizzBuzz(fizzbuzzConverter, START_INCLUSIVE, END_EXCLUSIVE);
+    private FizzBuzz fizzBuzzBazz = new FizzBuzz(fizzbuzzbazzConverter, START_INCLUSIVE, END_EXCLUSIVE);
 
     private static final List<String> FIZZBUZZES_1_100 = Arrays.asList(
             "1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz",
@@ -34,16 +45,16 @@ public class FizzBuzzTest {
             "91", "92", "Fizz", "94", "Buzz", "Fizz", "97", "98", "Fizz", "Buzz");
 
     private static final List<String> FIZZBUZZBAZZES_1_100 = Arrays.asList(
-            "1", "2", "Fizz", "4", "Buzz", "Fizz", "BAZZ", "8", "Fizz", "Buzz",
-            "11", "Fizz", "13", "BAZZ", "FizzBuzz", "16", "17", "Fizz", "19", "Buzz",
-            "FizzBAZZ", "22", "23", "Fizz", "Buzz", "26", "Fizz", "BAZZ", "29", "FizzBuzz",
-            "31", "32", "Fizz", "34", "BuzzBAZZ", "Fizz", "37", "38", "Fizz", "Buzz",
-            "41", "FizzBAZZ", "43", "44", "FizzBuzz", "46", "47", "Fizz", "BAZZ", "Buzz",
-            "Fizz", "52", "53", "Fizz", "Buzz", "BAZZ", "Fizz", "58", "59", "FizzBuzz",
-            "61", "62", "FizzBAZZ", "64", "Buzz", "Fizz", "67", "68", "Fizz", "BuzzBAZZ",
-            "71", "Fizz", "73", "74", "FizzBuzz", "76", "BAZZ", "Fizz", "79", "Buzz",
-            "Fizz", "82", "83", "FizzBAZZ", "Buzz", "86", "Fizz", "88", "89", "FizzBuzz",
-            "BAZZ", "92", "Fizz", "94", "Buzz", "Fizz", "97", "BAZZ", "Fizz", "Buzz");
+            "1", "2", "Fizz", "4", "Buzz", "Fizz", "Bazz", "8", "Fizz", "Buzz",
+            "11", "Fizz", "13", "Bazz", "FizzBuzz", "16", "17", "Fizz", "19", "Buzz",
+            "FizzBazz", "22", "23", "Fizz", "Buzz", "26", "Fizz", "Bazz", "29", "FizzBuzz",
+            "31", "32", "Fizz", "34", "BuzzBazz", "Fizz", "37", "38", "Fizz", "Buzz",
+            "41", "FizzBazz", "43", "44", "FizzBuzz", "46", "47", "Fizz", "Bazz", "Buzz",
+            "Fizz", "52", "53", "Fizz", "Buzz", "Bazz", "Fizz", "58", "59", "FizzBuzz",
+            "61", "62", "FizzBazz", "64", "Buzz", "Fizz", "67", "68", "Fizz", "BuzzBazz",
+            "71", "Fizz", "73", "74", "FizzBuzz", "76", "Bazz", "Fizz", "79", "Buzz",
+            "Fizz", "82", "83", "FizzBazz", "Buzz", "86", "Fizz", "88", "89", "FizzBuzz",
+            "Bazz", "92", "Fizz", "94", "Buzz", "Fizz", "97", "Bazz", "Fizz", "Buzz");
 
     @Test
     @Order(1)
@@ -96,8 +107,7 @@ public class FizzBuzzTest {
             "45,FizzBuzz"
     })
     void fizzbuzzTest(int number, String expected) {
-        Converter converter = new Converter();
-        assertEquals(expected, converter.convert(number));
+        assertEquals(expected, fizzbuzzConverter.convert(number));
     }
 
     @Test
@@ -106,7 +116,7 @@ public class FizzBuzzTest {
     void fizzbuzzbazzPrintTest() throws IOException {
         ByteArrayOutputStream bo = new ByteArrayOutputStream();
         System.setOut(new PrintStream(bo));
-        fizzBuzz.fizzbuzz();
+        fizzBuzzBazz.fizzbuzz();
         bo.flush();
         String actual = new String(bo.toByteArray());
         assertEquals(getSystemOutString(FIZZBUZZBAZZES_1_100), actual);
@@ -116,7 +126,7 @@ public class FizzBuzzTest {
     @Order(5)
     @DisplayName("5. FizzBuzzBazz 테스트 with List<String> 비교")
     void fizzbuzzbazzListTest() {
-        List<String> actual = fizzBuzz.getList();
+        List<String> actual = fizzBuzzBazz.getList();
         assertEquals(FIZZBUZZBAZZES_1_100, actual);
     }
 
@@ -147,32 +157,30 @@ public class FizzBuzzTest {
             "105,FizzBuzzBazz"
     })
     void fizzbuzzbazzTest(int number, String expected) {
-        Converter converter = new Converter();
-        assertEquals(expected, converter.convert(number));
+        assertEquals(expected, fizzbuzzbazzConverter.convert(number));
     }
 
     @Test
     @Order(7)
     @DisplayName("7. 0이하의 입력값에 대해서는 Exception")
     void throwsInvalidDataExceptionTest() {
-        Converter converter = new Converter();
         assertThrows(RuntimeException.class,
-                ()->converter.convert(0)
+                ()->fizzbuzzbazzConverter.convert(0)
         );
         assertThrows(RuntimeException.class,
-                ()->converter.convert(-1)
+                ()->fizzbuzzbazzConverter.convert(-1)
         );
         assertThrows(RuntimeException.class,
-                ()->converter.convert(-3)
+                ()->fizzbuzzbazzConverter.convert(-3)
         );
         assertThrows(RuntimeException.class,
-                ()->converter.convert(-5)
+                ()->fizzbuzzbazzConverter.convert(-5)
         );
         assertThrows(RuntimeException.class,
-                ()->converter.convert(-7)
+                ()->fizzbuzzbazzConverter.convert(-7)
         );
         assertThrows(RuntimeException.class,
-                ()->converter.convert(-15)
+                ()->fizzbuzzbazzConverter.convert(-15)
         );
     }
 }

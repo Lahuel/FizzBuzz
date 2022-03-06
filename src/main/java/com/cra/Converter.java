@@ -1,22 +1,26 @@
 package com.cra;
 
-import static com.cra.Constants.*;
+import java.util.List;
 
 public class Converter {
+    private List<Divisor> divisors;
+
+    public Converter(final List<Divisor> divisors) {
+        this.divisors = divisors;
+    }
+
     public String convert(int number) {
         if (number <= 0) {
             throw new RuntimeException("Invalid Data. number:" + number);
         }
-        if (isMultiple(number, DIVISOR_THREE) && isMultiple(number, DIVISOR_FIVE)) {
-            return FIZZBUZZ;
+
+        StringBuilder sb = new StringBuilder();
+        for (Divisor divisor : divisors) {
+            if (isMultiple(number, divisor.getDivisor())) {
+                sb.append(divisor.getSound());
+            }
         }
-        if (isMultiple(number, DIVISOR_THREE)) {
-            return FIZZ;
-        }
-        if (isMultiple(number, DIVISOR_FIVE)) {
-            return BUZZ;
-        }
-        return String.valueOf(number);
+        return getResult(number, sb.toString());
     }
 
     private boolean isMultiple(int number, int divisor) {
@@ -24,5 +28,12 @@ public class Converter {
             throw new RuntimeException("Divided by Zero. divisor:" + divisor);
         }
         return number % divisor == 0;
+    }
+
+    private String getResult(int number, String result) {
+        if (result == null || result.isEmpty()) {
+            return String.valueOf(number);
+        }
+        return result;
     }
 }
