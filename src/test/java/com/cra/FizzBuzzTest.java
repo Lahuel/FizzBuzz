@@ -7,27 +7,27 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class FizzBuzzTest {
     @Test
-    void fizzForThreeTest() {
+    void fizzbuzzForMultiplesOfThreeAndFiveTest() {
+        FizzBuzz fizzBuzz = new FizzBuzz();
+        assertEquals("FizzBuzz", fizzBuzz.convert(15));
+        assertEquals("FizzBuzz", fizzBuzz.convert(30));
+        assertEquals("FizzBuzz", fizzBuzz.convert(45));
+    }
+
+    @Test
+    void fizzForMultiplesOfThreeTest() {
         FizzBuzz fizzBuzz = new FizzBuzz();
         assertEquals("Fizz", fizzBuzz.convert(3));
-    }
-
-    @Test
-    void fizzForSixTest() {
-        FizzBuzz fizzBuzz = new FizzBuzz();
         assertEquals("Fizz", fizzBuzz.convert(6));
+        assertEquals("Fizz", fizzBuzz.convert(9));
     }
 
     @Test
-    void buzzForFiveTest() {
+    void buzzForMultiplesFiveTest() {
         FizzBuzz fizzBuzz = new FizzBuzz();
         assertEquals("Buzz", fizzBuzz.convert(5));
-    }
-
-    @Test
-    void buzzForTenTest() {
-        FizzBuzz fizzBuzz = new FizzBuzz();
         assertEquals("Buzz", fizzBuzz.convert(10));
+        assertEquals("Buzz", fizzBuzz.convert(20));
     }
 
     @Test
