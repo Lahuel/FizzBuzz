@@ -1,10 +1,18 @@
 package com.cra;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FizzBuzz {
     public void fizzbuzz() {
         for (int i = 1; i < 101; i++) {
             System.out.println(convert(i));
         }
+    }
+
+    public List<String> getList() {
+        List<String> result = new ArrayList<>();
+        return result;
     }
 
     public String convert(int number) {

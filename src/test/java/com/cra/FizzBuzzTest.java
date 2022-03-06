@@ -35,12 +35,53 @@ public class FizzBuzzTest {
         assertEquals(getSystemOutString(FIZZBUZZES_1_100), actual);
     }
 
+    @Test
+    void fizzbuzzListTest() {
+        FizzBuzz fizzBuzz = new FizzBuzz();
+        List<String> actual = fizzBuzz.getList();
+        assertEquals(FIZZBUZZES_1_100, actual);
+    }
+
     private String getSystemOutString(List<String> list) throws IOException {
         ByteArrayOutputStream bo = new ByteArrayOutputStream();
         System.setOut(new PrintStream(bo));
         list.forEach(System.out::println);
         bo.flush();
         return new String(bo.toByteArray());
+    }
+
+    @Test
+    void fizzbuzzForMultiplesOfThreeAndFiveTest() {
+        FizzBuzz fizzBuzz = new FizzBuzz();
+        assertEquals("FizzBuzz", fizzBuzz.convert(15));
+        assertEquals("FizzBuzz", fizzBuzz.convert(30));
+        assertEquals("FizzBuzz", fizzBuzz.convert(45));
+    }
+
+    @Test
+    void fizzForMultiplesOfThreeTest() {
+        FizzBuzz fizzBuzz = new FizzBuzz();
+        assertEquals("Fizz", fizzBuzz.convert(3));
+        assertEquals("Fizz", fizzBuzz.convert(6));
+        assertEquals("Fizz", fizzBuzz.convert(9));
+    }
+
+    @Test
+    void buzzForMultiplesFiveTest() {
+        FizzBuzz fizzBuzz = new FizzBuzz();
+        assertEquals("Buzz", fizzBuzz.convert(5));
+        assertEquals("Buzz", fizzBuzz.convert(10));
+        assertEquals("Buzz", fizzBuzz.convert(20));
+    }
+
+    @Test
+    void printTheNumberForOthersTest() {
+        FizzBuzz fizzBuzz = new FizzBuzz();
+        assertEquals("1", fizzBuzz.convert(1));
+        assertEquals("2", fizzBuzz.convert(2));
+        assertEquals("7", fizzBuzz.convert(7));
+        assertEquals("11", fizzBuzz.convert(11));
+        assertEquals("13", fizzBuzz.convert(13));
     }
 
     @Test
