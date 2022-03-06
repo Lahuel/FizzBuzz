@@ -5,10 +5,13 @@ public class FizzBuzz {
         if (number <= 0) {
             throw new RuntimeException("Invalid Data. number:" + number);
         }
-        if (number == 3 || number == 6) {
+        if (number % 3 == 0 && number % 5 == 0) {
+            return "FizzBuzz";
+        }
+        if (number % 3 == 0) {
             return "Fizz";
         }
-        if (number == 5 || number == 10) {
+        if (number % 5 == 0) {
             return "Buzz";
         }
         return String.valueOf(number);
