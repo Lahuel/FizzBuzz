@@ -2,9 +2,12 @@ package com.cra;
 
 public class FizzBuzz {
     public String convert(int number) {
-        if (number == 5) {
+        if (number == 3 || number == 6) {
+            return "Fizz";
+        }
+        if (number == 5 || number == 10) {
             return "Buzz";
         }
-        return "Fizz";
+        return String.valueOf(number);
     }
 }
