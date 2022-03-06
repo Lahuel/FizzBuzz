@@ -7,9 +7,7 @@ import static com.cra.Constants.*;
 
 public class FizzBuzz {
     public void fizzbuzz() {
-        for (String result : getList()) {
-            System.out.println(result);
-        }
+        getList().forEach(System.out::println);
     }
 
     List<String> getList() {
