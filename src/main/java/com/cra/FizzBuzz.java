@@ -5,13 +5,16 @@ import java.util.List;
 
 public class FizzBuzz {
     public void fizzbuzz() {
-        for (int i = 1; i < 101; i++) {
-            System.out.println(convert(i));
+        for (String result : getList()) {
+            System.out.println(result);
         }
     }
 
     public List<String> getList() {
         List<String> result = new ArrayList<>();
+        for (int i = 1; i < 101; i++) {
+            result.add(convert(i));
+        }
         return result;
     }
 
